@@ -9,12 +9,12 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 
-def datos():
+def load_data():
     data = pd.read_csv("../data/def_euskadi.csv", encoding='ISO-8859-1', skiprows=1)
     X = data[['rango1', 'rango2', 'rango3', 'mes', 'sexo', 'tramo edad cumplida']]
     y = data['grandes grupos CIE-10']
 
-def train_models(X, y):
+def trained_model(X, y):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     # Modelo 1: Regresión Lineal
@@ -67,3 +67,9 @@ def train_models(X, y):
 
     return modelo_knn, modelo_dt, modelo_gb, modelo_lr, modelo_mlp, modelo_svr, modelo_rf
 
+if __name__ == "__main__":
+    X, y = load_data()
+    models = trained_model(X, y)
+
+    for i, trained_model in enumerate(models[:-2]):
+        joblib.dump(model, '../models/trained_model' )
