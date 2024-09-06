@@ -72,4 +72,4 @@ if __name__ == "__main__":
     models = trained_model(X, y)
 
     for i, trained_model in enumerate(models[:-2]):
-        joblib.dump(model, '../models/trained_model' )
+        joblib.dump(models, '../models/trained_model' )
