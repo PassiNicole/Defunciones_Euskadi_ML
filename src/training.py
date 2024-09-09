@@ -7,15 +7,21 @@ from sklearn.svm import SVR
 from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, r2_score
+import joblib
 
+#cargar datos
 def load_data():
-    data = pd.read_csv("../data/def_euskadi.csv", encoding='ISO-8859-1', skiprows=1)
-    X = data[['rango1', 'rango2', 'rango3', 'mes', 'sexo', 'tramo edad cumplida']]
+    data = pd.read_csv("../data/data_defunciones_procesado.csv")
+    X = data[['Defunciones', 'mes', 'sexo', 'tramo edad cumplida']]
     y = data['grandes grupos CIE-10']
+    return X, y
 
 def trained_model(X, y):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    modelos = []
+    nombre_modelo = ['', '', '', '']
 
     # Modelo 1: Regresión Lineal
     modelo_lr = LinearRegression()
